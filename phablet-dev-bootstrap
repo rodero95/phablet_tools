@@ -28,7 +28,7 @@ logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger()
 log.name = 'phablet-dev-bootstrap'
 
-repo_init = 'git://github.com/rodero95/rodero95.git'
+repo_init = 'git://github.com/rodero95/ubuntu.git'
 repo_branch = 'phablet-10.1'
 valid_vendors = ('maguro', 'mako', 'manta', 'grouper', 'galaxysl')
 ubuntu_dir = 'ubuntu'
