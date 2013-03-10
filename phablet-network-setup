@@ -1,0 +1,144 @@
+#!/bin/bash
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the the GNU General Public License version 3, as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY or FITNESS FOR A PARTICULAR
+# PURPOSE.  See the applicable version of the GNU General Public
+# License for more details.
+#.
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Copyright (C) 2012 Canonical, Ltd.
+
+set -e
+
+export LC_ALL=C
+
+usage() {
+cat <<EOF
+usage: $0 [OPTIONS]
+
+Copies ACTIVE network manager connection into device
+
+OPTIONS:
+  -h	Show this message
+  -s    Specify the serial of the device to install (see adb $ADBOPTS devices)
+  -i    Install helper network packages (openssh-server, iw) in chroot
+  -n    Select network file
+
+EOF
+}
+
+ADBOPTS=""
+OPTION_SSH=0
+OPTION_NETWORK_FILE=""
+
+while getopts "hin:s:" OPTION
+do
+    case $OPTION in
+        h)
+            usage
+            exit 1
+            ;;
+        n)
+            OPTION_NETWORK_FILE="$OPTARG"
+            ;;
+        i)
+            OPTION_SSH=1
+            ;;
+        s)
+            ADBOPTS="-s $OPTARG"
+            ;;
+        ?)
+            usage
+            exit
+            ;;
+    esac
+done
+shift $(($OPTIND - 1))
+
+NETWORK_MANAGER=/etc/NetworkManager/system-connections
+
+find_active_network() {
+    wireless_adapter="$(nmcli -t -f device,type dev | egrep wireless | cut -d: -f1)"
+    network_active="$(nmcli -t -f name,devices,vpn con status | egrep $wireless_adapter | egrep ":no$"| cut -d: -f1)"
+    network_file=$(sudo grep "$network_active" $NETWORK_MANAGER/* |grep ssid | cut -d: -f1)
+
+    if [ -z "$network_active" ]
+    then
+        echo "No active wifi network connection, exiting"
+        exit 1
+    fi
+    echo "$network_file"
+}
+
+if [ -z $OPTION_NETWORK_FILE ]; then
+    network_file=$(find_active_network)
+else
+    network_file=$OPTION_NETWORK_FILE
+fi
+
+if [ ! -f "$network_file" ]
+then
+    echo "Network connection file \"$network_file\" cannot be read"
+    exit 1
+fi
+
+echo Network file is $network_file
+
+TMP_FILE=$(mktemp)
+sudo grep -v mac-address "$network_file" > $TMP_FILE
+
+echo Provisioning network file to device
+adb $ADBOPTS root
+adb $ADBOPTS wait-for-device
+target_network_file=/data/ubuntu/$NETWORK_MANAGER/active_ws_connection.conf
+adb $ADBOPTS push $TMP_FILE $target_network_file
+adb $ADBOPTS shell "/system/bin/chmod 600 $target_network_file"
+
+rm -f $TMP_FILE
+
+echo
+echo Network setup complete
+
+if [ $OPTION_SSH -eq 1 ]; then
+    TMP_FILE=$(mktemp)
+    # Indentation is going to be ugly here
+    cat > $TMP_FILE << 'EOF'
+#!/bin/bash
+export PATH="/sbin:/usr/sbin:/bin:/usr/bin" 
+apt-get update
+apt-get install --yes openssh-server iw
+EOF
+
+    echo Installing ssh
+    wait=0
+    command=$(adb $ADBOPTS shell chroot /data/ubuntu /usr/bin/nmcli -t -f name,devices,vpn con status)
+    until [ -n "$command" ] || [ $wait -eq 4 ]; do
+        echo "Network not ready, sleeping"
+        command=$(adb $ADBOPTS shell chroot /data/ubuntu /usr/bin/nmcli -t -f name,devices,vpn con status)
+        sleep $(( wait++ ))
+    done
+    if [ -z "$command" ]; then
+        echo "Network setup timed out"
+        exit 1
+    fi
+    UBUNTU_ROOT="/data/ubuntu"
+    adb $ADBOPTS push $TMP_FILE $UBUNTU_ROOT/$TMP_FILE
+    adb $ADBOPTS shell chmod 755 $UBUNTU_ROOT/$TMP_FILE
+    adb $ADBOPTS shell chroot $UBUNTU_ROOT $UBUNTU_ROOT/$TMP_FILE
+
+    rm -f $TMP_FILE
+
+    echo
+    echo openssh-server install complete, to connect execute
+    echo adb $ADBOPTS forward tcp:PORT tcp:22
+    echo with a proper PORT, e.g.\; 8888
+    echo i.e.\; adb $ADBOPTS forward tcp:8888 tcp:22
+    echo then ssh phablet@localhost -p 8888
+fi
+
