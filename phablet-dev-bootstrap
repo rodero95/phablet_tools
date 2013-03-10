@@ -28,9 +28,9 @@ logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger()
 log.name = 'phablet-dev-bootstrap'
 
-repo_init = 'git://phablet.ubuntu.com/CyanogenMod/android.git'
+repo_init = 'git://github.com/rodero95/rodero95.git'
 repo_branch = 'phablet-10.1'
-valid_vendors = ('maguro', 'mako', 'manta', 'grouper')
+valid_vendors = ('maguro', 'mako', 'manta', 'grouper', 'galaxysl')
 ubuntu_dir = 'ubuntu'
 
 branches = {
@@ -125,7 +125,7 @@ def parse_arguments():
                         '--vendors',
                         dest='vendors',
                         help='''Comma separated list of devices to Setup
-                        such as maguro, manta, mako, grouper''',
+                        such as maguro, manta, mako, grouper, galaxysl''',
                         action=StringSplitAction,
                        )
     parser.add_argument('-j',
