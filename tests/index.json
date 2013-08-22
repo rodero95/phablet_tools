@@ -1,0 +1,577 @@
+{
+    "global": {
+        "generated_at": "Wed Aug 07 11:30:01 UTC 2013"
+    },
+    "images": [
+        {
+            "description": "20130731.3",
+            "files": [
+                {
+                    "checksum": "7c9ce28bb751e25e80e5cee540ef1bdc929e97801528a14f066516f3ae2343d1",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130731.3.full.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130731.3.full.tar.xz.asc",
+                    "size": 264081876
+                },
+                {
+                    "checksum": "22ee6ded6902004e341a83c284218510a2b3a92c537a86140aa0daa76b7852f4",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130731.3.full.tar.xz",
+                    "signature": "/daily/mako/mako-20130731.3.full.tar.xz.asc",
+                    "size": 37335764
+                },
+                {
+                    "checksum": "4181ff7e4f6f6262f5eb231e65735c277abf5a13993d68abb200ca9cd8136c4e",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130733.tar.xz",
+                    "signature": "/daily/mako/version-20130733.tar.xz.asc",
+                    "size": 196
+                }
+            ],
+            "type": "full",
+            "version": 20130733
+        },
+        {
+            "base": 20130732,
+            "description": "20130731.3",
+            "files": [
+                {
+                    "checksum": "002c10476be7a4db9d2fda3b9583eb67c2873b82c5f95483f6df7b253d7a8171",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130731.3.delta-20130731.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130731.3.delta-20130731.tar.xz.asc",
+                    "size": 14993132
+                },
+                {
+                    "checksum": "e557a50f29ecfe6265c405cbc35621f18e2b01225f9d9bfea01e30ddca752f43",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130731.3.delta-20130730.tar.xz",
+                    "signature": "/daily/mako/mako-20130731.3.delta-20130730.tar.xz.asc",
+                    "size": 34903260
+                },
+                {
+                    "checksum": "4181ff7e4f6f6262f5eb231e65735c277abf5a13993d68abb200ca9cd8136c4e",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130733.tar.xz",
+                    "signature": "/daily/mako/version-20130733.tar.xz.asc",
+                    "size": 196
+                }
+            ],
+            "type": "delta",
+            "version": 20130733
+        },
+        {
+            "description": "20130801",
+            "files": [
+                {
+                    "checksum": "963c3bf9367450ab17c47f670f91db1d15f0ef6bdcf194481b5f458379129d7e",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130801.full.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130801.full.tar.xz.asc",
+                    "size": 264000016
+                },
+                {
+                    "checksum": "eb2160d8e37b9e5af34a8cb8b9e6cc63105f759a953d928c896741feef7eed01",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130801.full.tar.xz",
+                    "signature": "/daily/mako/mako-20130801.full.tar.xz.asc",
+                    "size": 37335924
+                },
+                {
+                    "checksum": "11da343b235e14a10a2537620e0dc397f4a23e8d5fc6f81e7fa86dcc9e80fa6a",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130800.tar.xz",
+                    "signature": "/daily/mako/version-20130800.tar.xz.asc",
+                    "size": 192
+                }
+            ],
+            "type": "full",
+            "version": 20130800
+        },
+        {
+            "base": 20130733,
+            "description": "20130801",
+            "files": [
+                {
+                    "checksum": "f81a98769b92a9ba2c61b75ee83aa7fa7417767788f518553ae195e0a846768f",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130801.delta-20130731.3.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130801.delta-20130731.3.tar.xz.asc",
+                    "size": 18625000
+                },
+                {
+                    "checksum": "e907a5a4740881080bb997e494df69e4b317ae938a2a689d0aa5cf7a086ea6a4",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130801.delta-20130731.3.tar.xz",
+                    "signature": "/daily/mako/mako-20130801.delta-20130731.3.tar.xz.asc",
+                    "size": 34903248
+                },
+                {
+                    "checksum": "11da343b235e14a10a2537620e0dc397f4a23e8d5fc6f81e7fa86dcc9e80fa6a",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130800.tar.xz",
+                    "signature": "/daily/mako/version-20130800.tar.xz.asc",
+                    "size": 192
+                }
+            ],
+            "type": "delta",
+            "version": 20130800
+        },
+        {
+            "description": "20130802.1",
+            "files": [
+                {
+                    "checksum": "05969428a0502d021ee91945f28bfd9884f774f406fe7e0578b09e26f521b171",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130802.1.full.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130802.1.full.tar.xz.asc",
+                    "size": 264078540
+                },
+                {
+                    "checksum": "269a33c87c6a995f068293776aa10f4a74d0cbb8101a236e0fedb375aff1df63",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130802.1.full.tar.xz",
+                    "signature": "/daily/mako/mako-20130802.1.full.tar.xz.asc",
+                    "size": 37342212
+                },
+                {
+                    "checksum": "b2f4f1b04add4d47209598acb78137e3eb31ef1997aa92f67b17fcba8ea2911c",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130801.tar.xz",
+                    "signature": "/daily/mako/version-20130801.tar.xz.asc",
+                    "size": 192
+                }
+            ],
+            "type": "full",
+            "version": 20130801
+        },
+        {
+            "base": 20130800,
+            "description": "20130802.1",
+            "files": [
+                {
+                    "checksum": "d3c80a6144159933d037a605052b1c56ad4edae05ba31c73841c4bc80df59f6e",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130802.1.delta-20130801.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130802.1.delta-20130801.tar.xz.asc",
+                    "size": 18381112
+                },
+                {
+                    "checksum": "0fe99c8d57cda68dc757bb10d039f26895c822d7e5d6efb96f9456efd65c384f",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130802.1.delta-20130801.tar.xz",
+                    "signature": "/daily/mako/mako-20130802.1.delta-20130801.tar.xz.asc",
+                    "size": 37098756
+                },
+                {
+                    "checksum": "b2f4f1b04add4d47209598acb78137e3eb31ef1997aa92f67b17fcba8ea2911c",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130801.tar.xz",
+                    "signature": "/daily/mako/version-20130801.tar.xz.asc",
+                    "size": 192
+                }
+            ],
+            "type": "delta",
+            "version": 20130801
+        },
+        {
+            "description": "20130802.2",
+            "files": [
+                {
+                    "checksum": "253139a135389d920ce446d258e4b0c779c51780c1ad747641a6cb11a3331634",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130802.2.full.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130802.2.full.tar.xz.asc",
+                    "size": 264050500
+                },
+                {
+                    "checksum": "490fc1586ea46d98719f2d53ae3044c31ef065d7d353071aed9ca4af43e37ceb",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130802.2.full.tar.xz",
+                    "signature": "/daily/mako/mako-20130802.2.full.tar.xz.asc",
+                    "size": 37335972
+                },
+                {
+                    "checksum": "64fbb613532c31d2ee0d6141a2cba656c3247f39a257b8eed67fa1d18f481983",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130802.tar.xz",
+                    "signature": "/daily/mako/version-20130802.tar.xz.asc",
+                    "size": 192
+                }
+            ],
+            "type": "full",
+            "version": 20130802
+        },
+        {
+            "base": 20130801,
+            "description": "20130802.2",
+            "files": [
+                {
+                    "checksum": "193fde8008c63009397cb5d470c0d81c3547583ea5a28e1c1dc0c7be57ab59cc",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130802.2.delta-20130802.1.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130802.2.delta-20130802.1.tar.xz.asc",
+                    "size": 19171116
+                },
+                {
+                    "checksum": "8f3747431d40a45e52c780116f92939ac4cd071d63a80d0c9031b1da6b6241ac",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130802.2.delta-20130802.1.tar.xz",
+                    "signature": "/daily/mako/mako-20130802.2.delta-20130802.1.tar.xz.asc",
+                    "size": 34996120
+                },
+                {
+                    "checksum": "64fbb613532c31d2ee0d6141a2cba656c3247f39a257b8eed67fa1d18f481983",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130802.tar.xz",
+                    "signature": "/daily/mako/version-20130802.tar.xz.asc",
+                    "size": 192
+                }
+            ],
+            "type": "delta",
+            "version": 20130802
+        },
+        {
+            "description": "20130803",
+            "files": [
+                {
+                    "checksum": "c0bc116b31adcb88b4587f8db0af9dcc6c6a2be839ea6013c5bd970bf9625467",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130803.full.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130803.full.tar.xz.asc",
+                    "size": 264111912
+                },
+                {
+                    "checksum": "02730cefdb71d35ce971f9494b0fedb775e1fd08cb65a8826fd74b3ebdba55d0",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130803.full.tar.xz",
+                    "signature": "/daily/mako/mako-20130803.full.tar.xz.asc",
+                    "size": 37344168
+                },
+                {
+                    "checksum": "3b4f2fdce15f5f3ececdc73b2b58f512717da37abadd50d9ac08fff4dcafad00",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130803.tar.xz",
+                    "signature": "/daily/mako/version-20130803.tar.xz.asc",
+                    "size": 196
+                }
+            ],
+            "type": "full",
+            "version": 20130803
+        },
+        {
+            "base": 20130802,
+            "description": "20130803",
+            "files": [
+                {
+                    "checksum": "fd11b3944464bde87f7d187979eef556ce33a3f5f6fff00808bffeaea906b0ee",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130803.delta-20130802.2.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130803.delta-20130802.2.tar.xz.asc",
+                    "size": 14519416
+                },
+                {
+                    "checksum": "60f988ece3a4a092e0f05aa326feb655d67b68e2a53736bd4aa6717a3e0d26db",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130803.delta-20130802.2.tar.xz",
+                    "signature": "/daily/mako/mako-20130803.delta-20130802.2.tar.xz.asc",
+                    "size": 34918944
+                },
+                {
+                    "checksum": "3b4f2fdce15f5f3ececdc73b2b58f512717da37abadd50d9ac08fff4dcafad00",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130803.tar.xz",
+                    "signature": "/daily/mako/version-20130803.tar.xz.asc",
+                    "size": 196
+                }
+            ],
+            "type": "delta",
+            "version": 20130803
+        },
+        {
+            "description": "20130804",
+            "files": [
+                {
+                    "checksum": "f3c1273666c71cb3fd74d9762783c016794cf36f5aab3fa01329460966293c6c",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130804.full.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130804.full.tar.xz.asc",
+                    "size": 264089004
+                },
+                {
+                    "checksum": "5f49821d302631c5de2f5df838b168b2c8290c0a9a4a510533464d92e4b9b638",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130804.full.tar.xz",
+                    "signature": "/daily/mako/mako-20130804.full.tar.xz.asc",
+                    "size": 37335780
+                },
+                {
+                    "checksum": "e2619bd73b47539e23ebfbc29620baf8a6d56c3cf850141e2f9b3c8973e00342",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130804.tar.xz",
+                    "signature": "/daily/mako/version-20130804.tar.xz.asc",
+                    "size": 196
+                }
+            ],
+            "type": "full",
+            "version": 20130804
+        },
+        {
+            "base": 20130803,
+            "description": "20130804",
+            "files": [
+                {
+                    "checksum": "80c02eb1269adfd3b641593a2a6c93a4f4c570fbce1a90020073295276a1c0ba",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130804.delta-20130803.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130804.delta-20130803.tar.xz.asc",
+                    "size": 16620436
+                },
+                {
+                    "checksum": "99d0eb9f2315675a427c899ed308ab2ce11694675c979a305800f1949e008083",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130804.delta-20130803.tar.xz",
+                    "signature": "/daily/mako/mako-20130804.delta-20130803.tar.xz.asc",
+                    "size": 34913316
+                },
+                {
+                    "checksum": "e2619bd73b47539e23ebfbc29620baf8a6d56c3cf850141e2f9b3c8973e00342",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130804.tar.xz",
+                    "signature": "/daily/mako/version-20130804.tar.xz.asc",
+                    "size": 196
+                }
+            ],
+            "type": "delta",
+            "version": 20130804
+        },
+        {
+            "description": "20130805",
+            "files": [
+                {
+                    "checksum": "6862856f1e029fd86883e1b28cc4aa959190ff3fdcaeb3c4115184c2942d21ee",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130805.full.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130805.full.tar.xz.asc",
+                    "size": 264023912
+                },
+                {
+                    "checksum": "c9f9b8644d5573cd73727a9a506ca46663cf22b6bae82d0dad90f3e53f43079c",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130805.full.tar.xz",
+                    "signature": "/daily/mako/mako-20130805.full.tar.xz.asc",
+                    "size": 37343256
+                },
+                {
+                    "checksum": "915f703e637a509c9947890983427ec6d44fa53ee5a45e866acbd76c5c7d2fcb",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130805.tar.xz",
+                    "signature": "/daily/mako/version-20130805.tar.xz.asc",
+                    "size": 196
+                }
+            ],
+            "type": "full",
+            "version": 20130805
+        },
+        {
+            "base": 20130804,
+            "description": "20130805",
+            "files": [
+                {
+                    "checksum": "8d65c5deb8723db8df7e918790f98bfe4304490d7bde96af85fba0989ff04fe8",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130805.delta-20130804.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130805.delta-20130804.tar.xz.asc",
+                    "size": 15166336
+                },
+                {
+                    "checksum": "401400168374635c26c320218518565d567bd3c38d0a4ffc2ff750207702d070",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130805.delta-20130804.tar.xz",
+                    "signature": "/daily/mako/mako-20130805.delta-20130804.tar.xz.asc",
+                    "size": 34921568
+                },
+                {
+                    "checksum": "915f703e637a509c9947890983427ec6d44fa53ee5a45e866acbd76c5c7d2fcb",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130805.tar.xz",
+                    "signature": "/daily/mako/version-20130805.tar.xz.asc",
+                    "size": 196
+                }
+            ],
+            "type": "delta",
+            "version": 20130805
+        },
+        {
+            "description": "20130806",
+            "files": [
+                {
+                    "checksum": "cd06ae29bc3d57def4d216be24d857a0c01367f65626651459a9478c42a8d80c",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130806.full.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130806.full.tar.xz.asc",
+                    "size": 264142320
+                },
+                {
+                    "checksum": "db5a43ee320eac7474a98beb0bbcc43648ff17f90adf581d19200bfb5bda0dce",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130806.full.tar.xz",
+                    "signature": "/daily/mako/mako-20130806.full.tar.xz.asc",
+                    "size": 42475196
+                },
+                {
+                    "checksum": "3a17c0ae8f9a42c26aee06313ebc619f0b2a24385f7cbf3df519698ab9078acf",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130806.tar.xz",
+                    "signature": "/daily/mako/version-20130806.tar.xz.asc",
+                    "size": 196
+                }
+            ],
+            "type": "full",
+            "version": 20130806
+        },
+        {
+            "base": 20130805,
+            "description": "20130806",
+            "files": [
+                {
+                    "checksum": "0acc8ef06a657d74117a759b7e0fff0ba7a69e332aec15f8dbc7d1716d04fbbb",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130806.delta-20130805.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130806.delta-20130805.tar.xz.asc",
+                    "size": 17806408
+                },
+                {
+                    "checksum": "59d1604655efc0cfc582b97bae1111344f273b49c3df259647fe6fb063448ebb",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130806.delta-20130805.tar.xz",
+                    "signature": "/daily/mako/mako-20130806.delta-20130805.tar.xz.asc",
+                    "size": 42221272
+                },
+                {
+                    "checksum": "3a17c0ae8f9a42c26aee06313ebc619f0b2a24385f7cbf3df519698ab9078acf",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130806.tar.xz",
+                    "signature": "/daily/mako/version-20130806.tar.xz.asc",
+                    "size": 196
+                }
+            ],
+            "type": "delta",
+            "version": 20130806
+        },
+        {
+            "description": "20130806.1",
+            "files": [
+                {
+                    "checksum": "b42156ae0b171c3425cb832d46cc4a86302a943beea18a29132ba3f84d978a02",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130806.1.full.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130806.1.full.tar.xz.asc",
+                    "size": 264114544
+                },
+                {
+                    "checksum": "6b5f8a78e94554ad59a3bb7f81550cce446d17d25d455759a77c6435d70de715",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130806.1.full.tar.xz",
+                    "signature": "/daily/mako/mako-20130806.1.full.tar.xz.asc",
+                    "size": 36869564
+                },
+                {
+                    "checksum": "aa1fbad7150d4c0a2cc23e78672678aaeeaa26ac4e57a65fb635bf62c898955c",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130807.tar.xz",
+                    "signature": "/daily/mako/version-20130807.tar.xz.asc",
+                    "size": 188
+                }
+            ],
+            "type": "full",
+            "version": 20130807
+        },
+        {
+            "base": 20130806,
+            "description": "20130806.1",
+            "files": [
+                {
+                    "checksum": "3d6283525d795a34f98e2b996ae5bf7ce70892ca79026c776fca973b1080b30e",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130806.1.delta-20130806.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130806.1.delta-20130806.tar.xz.asc",
+                    "size": 14764572
+                },
+                {
+                    "checksum": "3e02f4a2ae19f47ba1bd10c2f236b46b368d012ede8003cb11fa3afbe0d7683f",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130806.1.delta-20130806.tar.xz",
+                    "signature": "/daily/mako/mako-20130806.1.delta-20130806.tar.xz.asc",
+                    "size": 34428224
+                },
+                {
+                    "checksum": "aa1fbad7150d4c0a2cc23e78672678aaeeaa26ac4e57a65fb635bf62c898955c",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130807.tar.xz",
+                    "signature": "/daily/mako/version-20130807.tar.xz.asc",
+                    "size": 188
+                }
+            ],
+            "type": "delta",
+            "version": 20130807
+        },
+        {
+            "description": "20130807",
+            "files": [
+                {
+                    "checksum": "5a615f41c92c562496e650c2ee5831a66da02c5435c5270d6b594aec6e30511d",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130807.full.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130807.full.tar.xz.asc",
+                    "size": 264539288
+                },
+                {
+                    "checksum": "1a39b78b220660fe0c7fd8c30febe92009ad5306610e41f7cdf838da8290c59a",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130807.full.tar.xz",
+                    "signature": "/daily/mako/mako-20130807.full.tar.xz.asc",
+                    "size": 36875496
+                },
+                {
+                    "checksum": "287eb50401487dc217f6a614fa03ae1bfb7fbead48f196692cf090667c98353f",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130808.tar.xz",
+                    "signature": "/daily/mako/version-20130808.tar.xz.asc",
+                    "size": 192
+                }
+            ],
+            "type": "full",
+            "version": 20130808
+        },
+        {
+            "base": 20130807,
+            "description": "20130807",
+            "files": [
+                {
+                    "checksum": "1e48af06cb25e899a536301c36f212f06c0479be69785d1569d2795099485ab5",
+                    "order": 0,
+                    "path": "/daily/ubuntu/ubuntu-20130807.delta-20130806.1.tar.xz",
+                    "signature": "/daily/ubuntu/ubuntu-20130807.delta-20130806.1.tar.xz.asc",
+                    "size": 17889552
+                },
+                {
+                    "checksum": "10000fae3aa0a567bb10cc5efc6552bb01ee6ec96a689f0adf886ad3e202b0c7",
+                    "order": 1,
+                    "path": "/daily/mako/mako-20130807.delta-20130806.1.tar.xz",
+                    "signature": "/daily/mako/mako-20130807.delta-20130806.1.tar.xz.asc",
+                    "size": 34435132
+                },
+                {
+                    "checksum": "287eb50401487dc217f6a614fa03ae1bfb7fbead48f196692cf090667c98353f",
+                    "order": 2,
+                    "path": "/daily/mako/version-20130808.tar.xz",
+                    "signature": "/daily/mako/version-20130808.tar.xz.asc",
+                    "size": 192
+                }
+            ],
+            "type": "delta",
+            "version": 20130808
+        }
+    ]
+}

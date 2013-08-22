@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 
-from distutils.core import setup
 from setuptools import find_packages
+from setuptools import setup
 
 setup(
     name='phablet-tools',
@@ -10,10 +10,14 @@ setup(
     author='Sergio Schvezov',
     author_email='sergio.schvezov@canonical.com',
     license='GPLv3',
-    packages=find_packages(),
+    packages=find_packages(exclude=("tests",)),
     scripts=['phablet-flash',
+             'phablet-click-test-setup',
+             'phablet-demo-setup',
              'phablet-network-setup',
              'phablet-dev-bootstrap',
+             'phablet-test-run',
              'repo',
-            ],
+             ],
+    test_suite='tests',
 )

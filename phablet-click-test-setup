@@ -1,0 +1,151 @@
+#! /usr/bin/python2.7
+# -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
+# Copyright (C) 2013 Canonical Ltd.
+# Author: Sergio Schvezov <sergio.schvezov@canonical.com>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+from __future__ import print_function
+
+from phabletutils.device import AndroidBridge
+from os import path
+from subprocess import (check_call, check_output)
+
+import argparse
+import atexit
+import json
+import os
+import shutil
+import tempfile
+
+
+basic_packages = (
+    {'source': 'unity8', 'binary': 'unity8'},
+    {'source': 'ubuntu-ui-toolkit',
+     'binary': 'qtdeclarative5-ubuntu-ui-toolkit-plugin'})
+
+
+class UbuntuDevice(AndroidBridge):
+
+    def __init__(self, device=None):
+        super(UbuntuDevice, self).__init__(device=device)
+
+    def get_package_version(self, package):
+        cmd = 'shell dpkg-query --show --showformat \'\${Version}\' %s ' % \
+            package
+        return check_output(self._cmd % cmd, shell=True)
+
+    def get_click_manifest(self, user):
+        cmd = 'shell click list --user=%s --manifest' % user
+        return json.loads(check_output(self._cmd % cmd, shell=True))
+
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(
+        description='Sets up a device to be tested.')
+    parser.add_argument('--manifest',
+                        help='Manifest with package dependencies')
+    parser.add_argument('-s', '--serial',
+                        help='''Device serial. Use when more than
+                                one device is connected.''',
+                        )
+    parser.add_argument('--click', default=None,
+                        help='Specific click package to setup for.'
+                        )
+    parser.add_argument('--user', default='phablet',
+                        help='User on device to use')
+    parser.add_argument('--wipe', action='store_true',
+                        help='Clean up previous setup on device')
+    return parser.parse_args()
+
+
+def cleanup(directory):
+    if os.path.exists(directory) and os.path.isdir(directory):
+        print('Removing directory %s' % directory)
+        shutil.rmtree(directory)
+
+
+def get_source_package_tests(package, version, target_dir):
+    tmp_dir = tempfile.mkdtemp()
+    atexit.register(cleanup, tmp_dir)
+    print('Fetching %s - %s into %s' % (package, version, tmp_dir))
+    check_call(['pull-lp-source', package, version], cwd=tmp_dir)
+    print('Keeping tests from obtained package')
+    package_artifacts = filter((lambda x: x.startswith(package)),
+                               os.listdir(tmp_dir))
+    package_source = filter((lambda x: path.isdir(path.join(tmp_dir, x))),
+                            package_artifacts)
+    # Just let an exception be thrown if more than one match which means
+    # there's a problem somewhere
+    test_base_dir = path.join(tmp_dir, package_source[0], 'tests', 'autopilot')
+    test_dirs = filter((lambda x: path.isdir(path.join(test_base_dir, x))),
+                       os.listdir(test_base_dir))
+    for test_dir in test_dirs:
+        test_dir = path.join(test_base_dir, test_dir)
+        print('Moving %s to %s' % (test_dir, target_dir))
+        shutil.move(test_dir, target_dir)
+
+
+def get_bzr_tests(branch, revision, target_dir):
+    tmp_dir = tempfile.mkdtemp()
+    atexit.register(cleanup, tmp_dir)
+    print('Checking out %s to %s' % (branch, path.join(tmp_dir, 'work')))
+    check_call(['bzr', 'checkout', '--lightweight', branch, '-r', revision,
+               'work'], cwd=tmp_dir)
+    test_base_dir = path.join(tmp_dir, 'work', 'tests', 'autopilot')
+    test_dirs = filter((lambda x: path.isdir(path.join(test_base_dir, x))),
+                       os.listdir(test_base_dir))
+    for test_dir in test_dirs:
+        test_dir = path.join(test_base_dir, test_dir)
+        print('Moving %s to %s' % (test_dir, target_dir))
+        shutil.move(test_dir, target_dir)
+
+
+def fetch_test_base(adb, test_dir):
+    for package in basic_packages:
+        version = adb.get_package_version(package['binary'])
+        get_source_package_tests(package['source'], version, test_dir)
+
+
+def fetch_click_tests(adb, test_dir, user, click=None):
+    manifest = adb.get_click_manifest(user)
+    if click:
+        print('Only setting up for %s' % click)
+        manifest = [entry for entry in manifest if click == entry['name']]
+    print('Only keeping entries with x-source')
+    manifest = [entry for entry in manifest if 'x-source' in entry]
+    for entry in manifest:
+        get_bzr_tests(entry['x-source']['vcs-bzr'],
+                      entry['x-source']['vcs-bzr-revno'],
+                      test_dir)
+
+
+def main():
+    args = parse_arguments()
+    adb = UbuntuDevice(args.serial)
+    adb.start()
+    test_dir = tempfile.mkdtemp()
+    atexit.register(cleanup, test_dir)
+    fetch_test_base(adb, test_dir)
+    fetch_click_tests(adb, test_dir, args.user, args.click)
+    destination = path.join('/home', args.user, 'autopilot')
+    if args.wipe:
+        print('Clearing previous test setup in %s' % destination)
+        adb.shell('rm -Rf %s' % destination)
+    adb.push(test_dir, destination)
+    adb.chown(args.user, destination)
+    print('Files setup in %s on device' % destination)
+
+
+if __name__ == '__main__':
+    main()

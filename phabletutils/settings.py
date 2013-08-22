@@ -1,37 +1,60 @@
-#! /usr/bin/env python
-# This program is free software: you can redistribute it and/or modify it
-# under the terms of the the GNU General Public License version 3, as
-# published by the Free Software Foundation.
+# -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
+# Copyright (C) 2013 Canonical Ltd.
+# Author: Sergio Schvezov <sergio.schvezov@canonical.com>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 3 of the License.
 #
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranties of
-# MERCHANTABILITY, SATISFACTORY QUALITY or FITNESS FOR A PARTICULAR
-# PURPOSE.  See the applicable version of the GNU Lesser General Public
-# License for more details.
-#.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-# Copyright (C) 2013 Canonical, Ltd.
 
-download_uri = 'http://cdimage.ubuntu.com/ubuntu-touch-preview/quantal/mwc-demo'
-daily_uri = 'http://cdimage.ubuntu.com/ubuntu-touch-preview/daily-preinstalled/current'
+revision = 2
+default_series = 'saucy'
+cdimage_uri_base = 'http://cdimage.ubuntu.com'
+system_image_uri = 'https://system-image.ubuntu.com'
 download_dir = 'phablet-flash'
-ubuntu_image = 'quantal-preinstalled-phablet-armhf.zip'
-device_file = 'quantal-preinstalled-armel+%s.zip'
-device_file_img = 'quantal-preinstalled-system-armel+%s.img'
-boot_file_img = 'quantal-preinstalled-boot-armel+%s.img'
-recovery_file_img = 'quantal-preinstalled-recovery-armel+%s.img'
+
+files_arch_any = {
+    'ubuntu-touch': {
+        'device_zip': '%s-preinstalled-touch-armel+%s.zip',
+        'system_img': '%s-preinstalled-system-armel+%s.img',
+        'boot_img': '%s-preinstalled-boot-armhf+%s.img',
+        'recovery_img': '%s-preinstalled-recovery-armel+%s.img',
+    },
+    'ubuntu-touch-preview': {
+        'device_zip': '%s-preinstalled-armel+%s.zip',
+        'system_img': '%s-preinstalled-system-armel+%s.img',
+        'boot_img': '%s-preinstalled-boot-armel+%s.img',
+        'recovery_img': '%s-preinstalled-recovery-armel+%s.img',
+    },
+}
+
+files_arch_all = {
+    'ubuntu-touch': {
+        'ubuntu_zip': '%s-preinstalled-touch-armhf.zip',
+    },
+    'ubuntu-touch-preview': {
+        'ubuntu_zip': '%s-preinstalled-phablet-armhf.zip',
+    }
+}
+
 recovery_script_template = '''boot-recovery
---update_package={0}/{1}
---user_data_update_package={0}/{2}
+--update_package=/sdcard/{0}
+--user_data_update_package=/sdcard/{1}
 reboot
 '''
+
 supported_devices = ('mako',
                      'maguro',
                      'manta',
                      'grouper',
-                    )
+                     )
 legal_notice = '''"Touch Developer Preview for Ubuntu" is released for free
 non-commercial use. It is provided without warranty, even the implied
 warranty of merchantability, satisfaction or fitness for a particular

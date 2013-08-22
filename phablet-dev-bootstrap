@@ -29,12 +29,11 @@ log = logging.getLogger()
 log.name = 'phablet-dev-bootstrap'
 
 repo_init = 'git://github.com/rodero95/ubuntu.git'
-repo_branch = 'phablet-10.1'
+repo_branch = 'phablet-saucy'
 valid_vendors = ('maguro', 'mako', 'manta', 'grouper', 'galaxysl')
 ubuntu_dir = 'ubuntu'
 
 branches = {
-    'ubuntu/hybris': 'lp:phablet-extras/libhybris',
     'ubuntu/platform-api': 'lp:platform-api',
 }
 

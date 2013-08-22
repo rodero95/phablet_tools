@@ -1,71 +1,136 @@
-# This program is free software: you can redistribute it and/or modify it
-# under the terms of the the GNU General Public License version 3, as
-# published by the Free Software Foundation.
+# -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
+# Copyright (C) 2013 Canonical Ltd.
+# Author: Sergio Schvezov <sergio.schvezov@canonical.com>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 3 of the License.
 #
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranties of
-# MERCHANTABILITY, SATISFACTORY QUALITY or FITNESS FOR A PARTICULAR
-# PURPOSE.  See the applicable version of the GNU Lesser General Public
-# License for more details.
-#.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-# Copyright (C) 2013 Canonical, Ltd.
 
+import configobj
+import contextlib
+import fcntl
+import hashlib
 import logging
 import os
+import requests
 import subprocess
+
+from xdg.BaseDirectory import xdg_config_home
 
 
 log = logging.getLogger()
 
 
-def download(uri, target_file):
-    '''Downloads an artifact into target.'''
-    log.info('Downloading %s' % uri)
-    if uri.startswith('http://cdimage.ubuntu.com'):
-        subprocess.check_call(['wget', '-c', uri, '-O', target_file])
+@contextlib.contextmanager
+def flocked(lockfile):
+    lockfile += '.lock'
+    with open(lockfile, 'w') as f:
+        log.debug('Aquiring lock for %s', lockfile)
+        try:
+            fcntl.lockf(f, fcntl.LOCK_EX)
+            yield
+        finally:
+            log.debug('Releasing lock for %s', lockfile)
+            fcntl.lockf(f, fcntl.LOCK_UN)
+
+
+def setup_download_directory(download_dir):
+    '''
+    Tries to create the download directory from XDG_DOWNLOAD_DIR or sets
+    an alternative one.
+
+    Returns path to directory
+    '''
+    log.info('Download directory set to %s' % download_dir)
+    if not os.path.exists(download_dir):
+        log.info('Creating %s' % download_dir)
+        try:
+            os.makedirs(download_dir)
+        except OSError as e:
+            if e.errno == 17:
+                pass
+            else:
+                raise e
+
+
+def get_full_path(subdir):
+    try:
+        userdirs_file = os.path.join(xdg_config_home, 'user-dirs.dirs')
+        userdirs_config = configobj.ConfigObj(userdirs_file, encoding='utf-8')
+        userdirs_download = os.path.expandvars(
+            userdirs_config['XDG_DOWNLOAD_DIR'])
+        download_dir = userdirs_download
+    except KeyError:
+        download_dir = os.path.expandvars('$HOME')
+        log.warning('XDG_DOWNLOAD_DIR could not be read')
+    directory = os.path.join(download_dir, subdir)
+    setup_download_directory(directory)
+    return directory
+
+
+def checksum_verify(file_path, file_hash, sum_method=hashlib.sha256):
+    '''Returns the checksum for a file with a specified algorightm.'''
+    file_sum = sum_method()
+    log.debug('Verifying file: %s against: %s' % (file_path, file_hash))
+    if not os.path.exists(file_path):
+        log.debug('File %s not found' % file_path)
+        return False
+    with open(file_path, 'rb') as f:
+        for file_chunk in iter(
+                lambda: f.read(file_sum.block_size * 128), b''):
+            file_sum.update(file_chunk)
+    if file_hash == file_sum.hexdigest():
+        return True
     else:
-        subprocess.check_call(['curl', '-C', '-', uri, '-o', target_file])
+        log.debug('Calculated sum mismatch calculated %s != %s' %
+                  (file_sum.hexdigest(), file_hash))
+    return False
 
 
-class DownloadManager(object):
+def _download(uri, path):
+    if uri.startswith('http://cdimage.ubuntu.com') or \
+       uri.startswith('https://system-image.ubuntu.com'):
+        subprocess.check_call(['wget',
+                               '-c',
+                               uri,
+                               '-O',
+                               path])
+    else:
+        subprocess.check_call(['curl',
+                               '-L',
+                               '-C',
+                               '-',
+                               uri,
+                               '-o',
+                               path])
 
-    def __init__(self, base_uri, download_dir, artifact_list, offline=False):
-        if not os.path.isdir(download_dir):
-            raise RuntimeError('Directory %s does not exist or is not a '
-                               'direcotry' % download_dir)
-        self._base_uri = base_uri
-        self._download_dir = download_dir
-        self._artifact_list = artifact_list
-        self._targets = {}
-        self._offline = offline
 
-    @property
-    def files(self):
-        return self._targets
+def download_sig(artifact):
+    '''Downloads an artifact into target.'''
+    log.info('Downloading %s to %s' % (artifact.uri, artifact.path))
+    with flocked(artifact._sig_path):
+        _download(artifact.sig_uri, artifact.sig_path)
 
-    def _target_file(self, artifact):
-        '''Constructs the path for the file to download.'''
-        uri = '%s/%s' % (self._base_uri, artifact)
-        target = os.path.join(self._download_dir, '%s' % (artifact))
-        self._targets[artifact] = target
-        return {'uri': uri, 'target_file': target}
 
-    def download(self, validate=True):
-        '''Downloads arget_uri.'''
-        for artifact in self._artifact_list:
-            target_file = self._target_file(artifact)
-            if not self._offline:
-                download(**target_file)
-            if validate:
-                md5file = '%s.md5sum' % artifact
-                if not self._offline:
-                    download(**self._target_file(md5file))
-                self.validate(md5file)
+def download(artifact):
+    '''Downloads an artifact into target.'''
+    log.info('Downloading %s to %s' % (artifact.uri, artifact.path))
+    with flocked(artifact._path):
+        _download(artifact.uri, artifact.path)
 
-    def validate(self, artifact):
-        '''Validates downloaded files against md5sum.'''
-        subprocess.check_call(['md5sum', '-c', '%s' % artifact],
-                              cwd=self._download_dir)
+
+def get_content(uri):
+    '''Fetches the SHA256 sum file from cdimage.'''
+    content_request = requests.get(uri)
+    if content_request.status_code != 200:
+        return None
+    else:
+        return content_request.content
